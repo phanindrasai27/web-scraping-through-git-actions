@@ -1,29 +1,27 @@
-#Name of the action
 name: cryptoscrape
-# Controls when the action will run.
-# Controls when the action will run.
-# test
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push
-jobs: 
+  push:
+    branches:
+      - main  # This ensures the action runs only on pushes to the main branch
+
+jobs:
   autoscrape:
-    # The type of runner that the job will run on
     runs-on: macos-latest
-# Load repo and install R
+
     steps:
-    - uses: actions/checkout@main
-    - uses: r-lib/actions/setup-r@main
-# Set-up R
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Corrected to use version 2
+
+    - name: Setup R
+      uses: r-lib/actions/setup-r@v1  # Corrected to use version 1
+
     - name: Install packages
       run: |
         R -e 'install.packages(c("dplyr", "ralger", "magrittr"))'
-    # Run R script
-    - name: scrap
+
+    - name: Run script
       run: Rscript crypto_scrapper.R
       
- # Add new files in data folder, commit along with other modified files, push
     - name: Commit files
       run: |
         git config --local user.name actions-user
