@@ -2,7 +2,7 @@ name: cryptoscrape
 on:
   push:
     branches:
-      - main  # This ensures the action runs only on pushes to the main branch
+      - main
 
 jobs:
   autoscrape:
@@ -10,10 +10,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2  # Corrected to use version 2
+      uses: actions/checkout@v2
 
     - name: Setup R
-      uses: r-lib/actions/setup-r@v1  # Corrected to use version 1
+      uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: 4.3.1  # Updated to the latest version of R
 
     - name: Install packages
       run: |
